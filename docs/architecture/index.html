@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App Architecture</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f5f2;
+        --panel: #ffffff;
+        --ink: #182033;
+        --muted: #667085;
+        --line: #deded8;
+        --accent: #256f5c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      main {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 40px 0 56px;
+      }
+
+      header {
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        line-height: 1;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        font-size: 1.25rem;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      code {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      section {
+        margin-top: 28px;
+        padding: 24px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 10px 28px rgb(24 32 51 / 7%);
+      }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .summary div {
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfbf8;
+      }
+
+      .summary strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .mermaid {
+        margin: 18px 0 0;
+        padding: 16px;
+        overflow-x: auto;
+        background: #fbfbf8;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Notes App Architecture</h1>
+        <p>
+          <code>src/</code> 디렉토리 기준의 컴포넌트 의존성, 상태 흐름, API 경계를
+          Mermaid로 정리한 문서입니다.
+        </p>
+        <div class="summary">
+          <div>
+            <strong>Entry</strong>
+            <p><code>main.tsx</code>가 React 루트를 만들고 <code>App</code>을 렌더링합니다.</p>
+          </div>
+          <div>
+            <strong>State</strong>
+            <p><code>App</code>은 화면 상태, <code>NotesProvider</code>는 데이터 상태를 소유합니다.</p>
+          </div>
+          <div>
+            <strong>API</strong>
+            <p><code>api/notes.ts</code>가 <code>json-server /notes</code>와 통신합니다.</p>
+          </div>
+        </div>
+      </header>
+
+      <section>
+        <h2>src 구조</h2>
+        <p>소스는 entry, app shell, context, api, components, types 레이어로 나뉩니다.</p>
+        <pre class="mermaid">
+flowchart TD
+  Src["src/"]
+  Src --> Main["main.tsx\nReact root"]
+  Src --> App["App.tsx\nscreen state + composition"]
+  Src --> Context["context/NotesContext.tsx\nglobal notes state"]
+  Src --> Api["api/notes.ts\nfetch CRUD"]
+  Src --> Components["components/"]
+  Src --> Types["types/note.ts\nNote shape"]
+  Components --> Layout["Layout.tsx"]
+  Components --> NoteList["NoteList.tsx"]
+  Components --> NoteItem["NoteItem.tsx"]
+  Components --> NoteEditor["NoteEditor.tsx"]
+        </pre>
+      </section>
+
+      <section>
+        <h2>컴포넌트 의존성</h2>
+        <p>
+          <code>Layout</code>은 <code>NoteList</code>, <code>NoteEditor</code>를 직접 import하지 않고
+          <code>sidebar</code>, <code>main</code> 슬롯으로 받습니다.
+        </p>
+        <pre class="mermaid">
+flowchart TD
+  Main["main.tsx"] --> App["App.tsx"]
+  App --> Provider["NotesProvider"]
+  App --> Layout["Layout"]
+  App --> NoteList["NoteList"]
+  App --> NoteEditor["NoteEditor"]
+
+  App -. "sidebar prop" .-> Layout
+  App -. "main prop" .-> Layout
+  Layout --> Header["Header + New Note button"]
+  Layout --> SidebarSlot["sidebar slot"]
+  Layout --> MainSlot["main slot"]
+
+  NoteList --> UseNotesList["useNotes()"]
+  NoteList --> NoteItem["NoteItem"]
+  NoteEditor --> UseNotesEditor["useNotes()"]
+
+  Provider --> NotesContext["NotesContext"]
+  Provider --> NotesApi["api/notes.ts"]
+  Provider --> NoteType["types/note.ts"]
+  NotesApi --> JsonServer["json-server\nhttp://localhost:3001/notes"]
+  NotesApi --> NoteType
+  NoteEditor -. "reads Note shape via context" .-> NoteType
+  NoteItem --> NoteType
+        </pre>
+      </section>
+
+      <section>
+        <h2>상태 흐름</h2>
+        <p>
+          화면 선택 상태는 <code>App</code>에서 내려가고, 노트 데이터 상태는
+          <code>NotesProvider</code>에서 Context로 제공됩니다.
+        </p>
+        <pre class="mermaid">
+flowchart LR
+  AppState["App state\nselectedNoteId\nisCreating"]
+  ProviderState["NotesProvider state\nnotes\nloading\nerror"]
+  ContextValue["Context value\nnotes + create/update/delete"]
+  Fetch["mount effect\nfetchNotes()"]
+
+  AppState --> Layout["Layout"]
+  AppState --> NoteList["NoteList"]
+  AppState --> NoteEditor["NoteEditor"]
+
+  Layout --> NewClick["+ 새 노트 클릭"]
+  NewClick --> HandleNew["handleNewNote"]
+  HandleNew --> AppState
+
+  NoteItem["NoteItem 클릭"] --> HandleSelect["handleSelectNote"]
+  HandleSelect --> AppState
+
+  NoteEditor --> Done["onDone"]
+  Done --> HandleDone["handleDone"]
+  HandleDone --> AppState
+
+  Fetch --> ProviderState
+  ProviderState --> ContextValue
+  ContextValue --> NoteList
+  ContextValue --> NoteEditor
+        </pre>
+      </section>
+
+      <section>
+        <h2>API / 데이터 변경 흐름</h2>
+        <p>
+          생성, 수정, 삭제는 Context 액션에서 API 계층을 호출한 뒤 성공 결과를 로컬
+          <code>notes</code> 배열에 반영합니다.
+        </p>
+        <pre class="mermaid">
+flowchart TD
+  NoteEditor["NoteEditor"] --> CreateAction["createNote(title, content)"]
+  NoteEditor --> UpdateAction["updateNote(id, updates)"]
+  NoteList["NoteList"] --> NoteItem["NoteItem"]
+  NoteList -. "passes deleteNote prop" .-> NoteItem
+  NoteItem --> DeleteAction["deleteNote(id)"]
+
+  CreateAction --> ApiCreate["api.createNote\nPOST /notes"]
+  UpdateAction --> ApiUpdate["api.updateNote\nPATCH /notes/:id"]
+  DeleteAction --> ApiDelete["api.deleteNote\nDELETE /notes/:id"]
+
+  ApiCreate --> Server["json-server /notes"]
+  ApiUpdate --> Server
+  ApiDelete --> Server
+
+  Server --> SetNotes["setNotes"]
+  SetNotes --> NotesProvider["NotesProvider"]
+  NotesProvider --> UseNotes["useNotes consumers"]
+        </pre>
+      </section>
+    </main>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "neutral",
+        securityLevel: "strict",
+        flowchart: {
+          curve: "basis",
+          htmlLabels: true
+        }
+      });
+    </script>
+  </body>
+</html>

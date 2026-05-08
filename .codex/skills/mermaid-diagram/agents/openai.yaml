@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mermaid Diagram"
+  short_description: "Generate Mermaid architecture diagrams."
+  default_prompt: "Create Mermaid diagrams for this project architecture."
