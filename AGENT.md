@@ -1,10 +1,12 @@
 # AGENT.md
 
 ## 목적
+
 - 이 저장소는 `React 19 + TypeScript + Vite + json-server` 기반 학습용 노트 앱이다.
 - 핵심 흐름은 `목록 선택 -> 편집/생성 -> 저장 -> 상태 반영`이다.
 
 ## 구조
+
 - 단일 앱 저장소.
 - 주요 파일:
   - `src/App.tsx`: 화면 상태(`selectedNoteId`, `isCreating`) 조립
@@ -14,6 +16,7 @@
   - `src/types/note.ts`: 도메인 타입
 
 ## 구현 패턴
+
 - 화면 상태와 데이터 상태를 분리한다.
   - 화면 상태: `App`
   - 데이터 상태: `NotesProvider`
@@ -26,12 +29,14 @@
 - 컴포넌트는 API를 직접 호출하지 않고 Context 액션을 통해 데이터 변경한다.
 
 ## 상태관리 규칙
+
 - 패턴: `Context + useState + useEffect`.
 - `NotesProvider`가 `notes`, `loading`, `error`를 소유한다.
 - 생성/수정/삭제는 Context 액션으로 수행 후 로컬 상태를 갱신한다.
 - `NoteEditor`는 선택된 노트/생성 모드에 맞춰 폼 상태를 동기화한다.
 
 ## API 호출 규칙
+
 - API 호출은 `src/api/notes.ts`에만 둔다.
 - 함수 단위 책임을 유지한다.
   - `fetchNotes`
@@ -45,6 +50,7 @@
   - API: `createNote`, `updateNote`, `deleteNote`
 
 ## 네이밍 규칙
+
 - 컴포넌트/파일: `PascalCase`.
 - Props 타입: `ComponentNameProps`.
 - Context 타입: `DomainContextType` (`NotesContextType`).
@@ -53,10 +59,12 @@
 - 내부 핸들러: `handleX`.
 
 ## 커밋 규칙
-- 형식: `type: 한국어 설명`.
-- 설명은 변경 내용의 목적과 의도를 포함해 간결하게 요약한다.
+
+- Conventional Commits 형식을 사용하되 제목과 본문은 한국어로 작성한다. 예: `feat: 노트 편집기 추가`
+- 커밋 메시지는 제목 1줄과 본문 최소 2줄을 포함해야 한다.
 
 ## 스타일링/실행
+
 - Tailwind v4와 `src/index.css`의 `@theme` 토큰을 우선 사용한다.
 - 실행:
   - `npm run dev`
@@ -64,6 +72,7 @@
   - API `http://localhost:3001/notes`
 
 ## 현재 불일치(정리 대상)
+
 - export 방식 불일치:
   - `App`은 default export
   - 나머지 컴포넌트는 named export
@@ -76,6 +85,7 @@
   - 전역 `--font-display`가 있으나 헤더 폰트는 inline style 사용
 
 ## 작업 기준
+
 - 단순함, 읽기 쉬움, 데이터 흐름의 명확성을 우선한다.
 - 새 추상화는 실제 필요가 생길 때만 추가한다.
 - 사용자 요청이 이 문서의 규칙과 충돌하면 예외 규칙임을 먼저 알리고 확인을 받은 뒤 진행한다.
