@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Design System'
+  short_description: 'Apply the Notes App design system to UI code.'
+  default_prompt: 'Use the design-system skill and update this UI according to the shared design-system docs.'
