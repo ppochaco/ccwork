@@ -79,9 +79,14 @@ if (filePaths.length === 0) {
   process.exit(0);
 }
 
-spawnSync(process.execPath, ['scripts/check-design-system.js', ...filePaths], {
-  cwd: repoRoot,
-  stdio: 'inherit',
-});
+for (const scriptPath of [
+  'scripts/check-design-system.js',
+  'scripts/check-state-representation.js',
+]) {
+  spawnSync(process.execPath, [scriptPath, ...filePaths], {
+    cwd: repoRoot,
+    stdio: 'inherit',
+  });
+}
 
 process.exit(0);

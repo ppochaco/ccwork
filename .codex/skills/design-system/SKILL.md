@@ -40,7 +40,7 @@ If the work is feature-specific, also read the feature design document when it e
 - Use the typography scale from `docs/design-system/typography.md`.
 - Use button, card, input, and modal patterns from `docs/design-system/components.md`.
 - Keep hover and focus states visually distinct.
-- Do not represent selected or error states with color alone.
+- Do not represent error, success, selected, or disabled states with color alone. Use text, border, and accessibility attributes together.
 - Preserve at least 44px click targets for interactive controls when practical.
 - Use the configured Korean-friendly sans font stack for UI text.
 
@@ -50,7 +50,9 @@ Before finishing UI code changes:
 
 1. Check that new component styles do not contain raw color values.
 2. Check that UI changes reference the documented shared or feature design rules.
-3. Run the smallest relevant verification command:
+3. Check PostToolUse design-system hook warnings after UI file edits.
+4. Treat any design-system warning output as feedback to fix immediately, even though the hook exits with code 0.
+5. Run the smallest relevant verification command:
    - UI code changes: `npm run lint`
    - Broader behavior changes: `npm test`
    - Build-sensitive changes: `npm run build`

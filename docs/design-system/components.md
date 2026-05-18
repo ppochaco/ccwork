@@ -9,7 +9,7 @@
 - hover와 focus는 같은 상태로 처리하지 않는다.
 - focus는 `--color-border-focus`, `--stroke-2`, `--effect-focus`로 명확하게 표시한다.
 - disabled는 opacity `0.4`를 기본으로 하되, 텍스트 대비와 cursor 처리를 함께 확인한다.
-- selected 상태는 색상만으로 전달하지 않고 border, shadow, ARIA 상태를 함께 사용한다.
+- 오류, 성공, selected, disabled 상태는 색상만으로 구분하지 않고 텍스트, border, ARIA 상태를 함께 사용한다.
 
 ## Button
 
@@ -140,7 +140,7 @@ placeholder는 보조 설명이며 label을 대체하지 않는다.
 ### Validation
 
 - 오류 텍스트는 `--color-text-danger`를 사용한다.
-- 오류 상태는 색상만으로 표시하지 않고 메시지를 함께 제공한다.
+- 오류 상태는 색상만으로 표시하지 않고 메시지, border, `aria-invalid="true"`를 함께 제공한다.
 - 오류가 있는 control에는 `aria-invalid="true"`를 적용한다.
 
 ## Modal
@@ -171,6 +171,6 @@ placeholder는 보조 설명이며 label을 대체하지 않는다.
 - 원시 색상값을 컴포넌트에 추가하지 않았다.
 - primary, secondary, destructive action이 역할에 맞게 구분된다.
 - hover와 focus 상태가 분리되어 있다.
-- selected 상태가 색상만으로 전달되지 않는다.
+- 오류, 성공, selected, disabled 상태가 텍스트, border, ARIA 상태를 함께 사용한다.
 - 버튼과 클릭 가능한 카드는 최소 44px 터치 영역을 갖는다.
 - 한글 UI 텍스트는 sans font stack을 사용한다.
