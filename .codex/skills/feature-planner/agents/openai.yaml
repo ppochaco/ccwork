@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Feature Planner'
+  short_description: 'Turn feature ideas into gated plans'
+  default_prompt: 'Use $feature-planner to turn this feature idea into approved specs, a PRD, and vertically sliced implementation issues.'
