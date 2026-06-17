@@ -93,16 +93,50 @@ Required gate after option comparison:
 [GATE] Stop and wait until the user selects one architecture option.
 ```
 
-After the user selects an option, write the selected decision into the PRD technical decision section using this ADR shape:
+After the user selects an architecture option, identify the ADR topics that need confirmation, but do not finalize them yet. Cover multiple ADR topics when implementation requires separate decisions. Do not collapse unrelated concerns into one ADR; split decisions by subject such as data model, state ownership, persistence, UI behavior, validation, API contract, and testing boundaries.
+
+Confirm ADRs one at a time, like the requirements interview. For each ADR topic:
+
+1. Present only one ADR topic.
+2. Show the implementation question being decided.
+3. Show viable alternatives with pros and cons for each.
+4. Show the recommended decision separately, with pros, cons, and a concise reason for recommending it.
+5. Ask the user to choose the recommendation, choose an alternative, or request changes.
+6. Wait for the user before presenting the next ADR.
+
+Required gate after each ADR proposal:
+
+```text
+[GATE] Stop and wait until the user confirms this ADR decision before presenting the next ADR.
+```
+
+Only after the user confirms an ADR proposal, write that confirmed decision into the PRD technical decision section using this ADR shape:
 
 ```markdown
 ### Technical Decision Title
 
-**Context** - Why this decision is needed and what problem it solves.
-**Decision** - What was selected.
-**Alternatives** - Rejected options and the reason each was rejected. Do not reject an alternative without a reason.
-**Consequences** - Tradeoffs. Include both benefits and drawbacks.
+#### Context
+
+Why this decision is needed and what problem it solves.
+
+#### Decision
+
+- What was selected.
+- Key implementation constraints.
+
+#### Alternatives
+
+1. **Rejected option**
+   - Benefit.
+   - Rejection reason. Do not reject an alternative without a reason.
+
+#### Consequences
+
+- Benefit or expected outcome.
+- Drawback or tradeoff.
 ```
+
+When all ADRs are confirmed, remove temporary progress sections such as ADR queues, pending decision lists, and confirmation gates from the PRD. The final PRD must contain only confirmed ADR content under the technical decision section, using numbering like `### 3.1. ADR-1` and `#### 3.1.1. Context`.
 
 Then write Out of Scope as concrete exclusions. Be specific enough to prevent scope expansion during implementation. Examples: tag color customization, automatic tag recommendation, tag-based search.
 
