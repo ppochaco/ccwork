@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Feature Slice'
+  short_description: 'Split oversized feature plans into separate sprint folders'
+  default_prompt: 'Use when a feature-planning result is still too large and needs to be split into multiple docs/features/{sprint-name}/ packages with separate spec-original.md, spec-fixed.md, prd.md, and issues.md.'
