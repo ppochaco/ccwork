@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Test Scenarios'
+  short_description: 'Issue signatures and Korean test scenarios'
+  default_prompt: 'Use $test-scenarios to confirm signatures and draft Korean test scenarios for GitHub issue 1.'
