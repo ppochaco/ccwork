@@ -1,11 +1,11 @@
 ---
 name: test-scenarios
-description: 'Derive implementation signatures and Korean test scenarios for one GitHub issue before TDD. Use when the user invokes /test-scenarios or asks to process an issue number into confirmed function/component signatures, docs/features/{name}/issue-{N}.md updates, Acceptance Criteria coverage checks, and review gates without writing implementation or test code.'
+description: 'Derive test-facing public context and Korean test scenarios for one GitHub issue before TDD. Use when the user invokes /test-scenarios or asks to process an issue number into confirmed signatures, API boundaries, component contracts, docs/features/{name}/issue-{N}.md updates, Acceptance Criteria coverage checks, and review gates without writing implementation or test code.'
 ---
 
 # Test Scenarios
 
-Use this skill to prepare one GitHub issue for TDD by first confirming the public implementation signatures, then deriving reviewable test scenarios. Write all user-facing outputs and generated scenario text in Korean.
+Use this skill to prepare one GitHub issue for TDD by first confirming the test-facing public context, then deriving reviewable test scenarios. Write all user-facing outputs and generated scenario text in Korean.
 
 Never write implementation code or test code while using this skill.
 
@@ -21,7 +21,7 @@ Treat the issue number as `$ARGUMENTS`.
 
 ## Required Context
 
-Before proposing signatures:
+Before proposing test context:
 
 1. Run `gh issue view $ARGUMENTS` and read the issue body, especially Acceptance Criteria.
 2. Identify the feature folder under `docs/features/{name}/`.
@@ -29,38 +29,60 @@ Before proposing signatures:
 4. Inspect relevant existing code and tests to match local naming, type, error, component, and documentation patterns.
 5. If `{name}` cannot be inferred from the issue, PRD, branch, or nearby docs, ask only for the missing feature folder name.
 
-## Signature Gate
+## Test Context Gate
 
-Derive signatures from the issue, PRD, and existing codebase. Include only the signatures needed for the issue scope:
+Derive test-facing public context from the issue, PRD, and existing codebase. Include only context needed to verify the issue scope.
 
-- function signatures: name, parameter types, return type
+Test context should explain the public boundaries that tests may exercise. Use clear sections that match the issue instead of forcing one table shape. Include only the sections that are relevant:
+
+- signatures: exported function, hook, component, or type signatures
+- API boundaries: request and response contracts, normalization rules, and failure behavior
+- components: component Props, observable rendering, accessible names, roles, text, and user actions
+- domain types: types used across module or API boundaries
+- data boundaries: persistence, seed data, fixture, or migration contracts visible through public behavior
 - error cases: when errors are thrown or surfaced
-- component Props types
-- hook or API contracts when the issue requires them
 
-Show the proposed signatures to the user and stop.
+For each context item, include:
+
+- target
+- status: existing, existing extension, or new
+- initial expected state, such as missing module/export, missing DOM output, missing behavior, wrong thrown error, missing data contract, or already satisfies context
+
+Show the proposed test context to the user and stop.
 
 ```text
-[GATE] Do not write docs/features/{name}/issue-{N}.md and do not derive scenarios until the user approves the signatures.
+[GATE] Do not write docs/features/{name}/issue-{N}.md and do not derive scenarios until the user approves the test context.
 ```
 
-## Record Approved Signatures
+## Record Approved Test Context
 
 After approval, create or update `docs/features/{name}/issue-{N}.md`.
 
-Record the approved signatures at the top of the file under a clear heading such as:
+Record the approved test context at the top of the file under a clear heading such as:
 
 ```markdown
 # Issue {N}: 테스트 시나리오
 
-## 확정된 시그니처
+## 확정된 테스트 맥락
+
+### 타입
+
+### 시그니처
+
+### API 경계
+
+### 컴포넌트
+
+### 데이터 경계
+
+### 에러 케이스
 ```
 
 Preserve useful existing content in the file unless it is stale signature or scenario content for the same issue.
 
 ## Scenario Derivation
 
-Derive scenarios from the approved signatures, PRD, issue body, Acceptance Criteria, and existing code patterns.
+Derive scenarios from the approved test context, PRD, issue body, Acceptance Criteria, and existing code patterns.
 
 Classify every scenario as one of:
 
@@ -112,8 +134,8 @@ Before finishing, verify:
 
 - no implementation code was written
 - no test code was written
-- signatures were approved before documentation updates
-- `docs/features/{name}/issue-{N}.md` contains the approved signatures
+- test context was approved before documentation updates
+- `docs/features/{name}/issue-{N}.md` contains the approved test context
 - scenarios are grouped or labeled as 정상, 경계, 예외
 - scenario titles use the required `should ... when ...` format
 - every GitHub Issue AC item has at least one scenario
