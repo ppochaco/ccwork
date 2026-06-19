@@ -1,0 +1,4 @@
+interface:
+  display_name: 'TDD Red'
+  short_description: 'Write scenario-covering tests from approved scenarios'
+  default_prompt: 'Use $tdd-red to write scenario-covering tests for GitHub issue 2 from the approved scenario document.'
