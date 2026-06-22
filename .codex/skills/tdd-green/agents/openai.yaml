@@ -1,0 +1,4 @@
+interface:
+  display_name: 'TDD Green'
+  short_description: 'Turn red issue scenarios green'
+  default_prompt: "Use $tdd-green to implement the minimal production code for one issue's red scenarios."
