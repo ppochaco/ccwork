@@ -89,20 +89,32 @@ Classify every scenario as one of:
 - 정상
 - 경계
 - 예외
+- 접근성
+- 회귀
 
-Use exactly this scenario title format:
+Write scenarios under classification subheadings with unchecked checkboxes. Use exactly this scenario item format:
 
-```text
-[정상/경계/예외] 함수명 또는 컴포넌트명 - should [기대동작] when [조건]
+```markdown
+## 테스트 시나리오
+
+### 정상
+
+- [ ] 함수명 또는 컴포넌트명 - should [기대동작] when [조건]
+
+### 경계
+
+- [ ] 함수명 또는 컴포넌트명 - should [기대동작] when [조건]
 ```
 
 Write scenarios in Korean. Do not write test code.
 
-Append the scenarios near the bottom of `docs/features/{name}/issue-{N}.md` under a heading such as:
+Append the scenarios near the bottom of `docs/features/{name}/issue-{N}.md` under this heading:
 
 ```markdown
 ## 테스트 시나리오
 ```
+
+Under `## 테스트 시나리오`, group scenarios with only the relevant subheadings from `### 정상`, `### 경계`, `### 예외`, `### 접근성`, and `### 회귀`. Do not prefix scenario text with `[정상]`, `[경계]`, or other classification labels because the subheading already provides the classification.
 
 ## Acceptance Criteria Coverage
 
@@ -117,7 +129,7 @@ After drafting scenarios:
 ```markdown
 ## AC 커버리지
 
-- AC1: [정상] ...
+- AC1: 정상 - 함수명 또는 컴포넌트명 - should ...
 ```
 
 ## Scenario Review Gate
@@ -136,6 +148,7 @@ Before finishing, verify:
 - no test code was written
 - test context was approved before documentation updates
 - `docs/features/{name}/issue-{N}.md` contains the approved test context
-- scenarios are grouped or labeled as 정상, 경계, 예외
+- scenarios are grouped under `### 정상`, `### 경계`, `### 예외`, `### 접근성`, or `### 회귀` subheadings
+- every scenario is an unchecked checkbox item in `- [ ] Target - should ... when ...` format
 - scenario titles use the required `should ... when ...` format
 - every GitHub Issue AC item has at least one scenario

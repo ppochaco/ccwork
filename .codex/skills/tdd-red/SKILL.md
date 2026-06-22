@@ -39,15 +39,27 @@ When deriving scenarios from `issues.md`:
 - Derive only public signatures needed by the tests from existing code, confirmed PRD/ADR contracts, or the AC itself.
 - Do not invent product behavior, validation rules, UI placement, copy, or persistence semantics that are not stated in the approved issue or confirmed PRD/ADR.
 - If an AC is too vague to test without a new product decision, stop and report the missing decision instead of writing speculative tests.
-- Use scenario titles in this format:
+- Write derived scenarios in `docs/features/{name}/issue-{N}.md` under classification subheadings with unchecked checkbox items:
 
-```text
-[정상|경계|오류|접근성|회귀] Target - should [기대 동작] when [조건]
+```markdown
+## 테스트 시나리오
+
+### 정상
+
+- [ ] Target - should [기대 동작] when [조건]
+
+### 경계
+
+- [ ] Target - should [기대 동작] when [조건]
 ```
+
+Use only the relevant subheadings from `### 정상`, `### 경계`, `### 예외`, `### 접근성`, and `### 회귀`. Do not prefix scenario text with `[정상]`, `[경계]`, or other classification labels.
 
 When `issue-{N}.md` contains approved test contracts:
 
 - Write tests against the approved public contracts and approved scenarios.
+- Treat checkbox scenario items under `## 테스트 시나리오` as approved scenarios, whether checked or unchecked.
+- Preserve scenario checkboxes while writing red tests. Do not mark a scenario `[x]` during this step.
 - It is valid for contracts to be missing, incomplete, or already satisfied.
 - Confirm each scenario's result after writing the test: failing, passing, skipped, or blocked.
 - If a contract already satisfies the scenario, keep the passing test when it covers an approved scenario and report it as already satisfied.
