@@ -40,26 +40,26 @@
 
 ### 정상
 
-- [ ] Note 타입 - should tags 문자열 배열 필드를 공개 계약에 포함한다 when 노트 데이터가 타입 경계를 통과한다
-- [ ] fetchNotes - should 저장된 tags 배열을 유지한다 when API 응답 노트에 tags가 포함되어 있다
-- [ ] NoteEditor - should 저장된 태그 칩을 제목 아래와 본문 위에 표시한다 when 선택된 노트에 `tags: ["업무", "긴급"]`이 있다
-- [ ] db.json - should 모든 기존 노트에 빈 tags 배열을 명시한다 when 시드 노트 데이터를 확인한다
+- [x] Note 타입 - should tags 문자열 배열 필드를 공개 계약에 포함한다 when 노트 데이터가 타입 경계를 통과한다
+- [x] fetchNotes - should 저장된 tags 배열을 유지한다 when API 응답 노트에 tags가 포함되어 있다
+- [x] NoteEditor - should 저장된 태그 칩을 제목 아래와 본문 위에 표시한다 when 선택된 노트에 `tags: ["업무", "긴급"]`이 있다
+- [x] db.json - should 모든 기존 노트에 빈 tags 배열을 명시한다 when 시드 노트 데이터를 확인한다
 
 ### 경계
 
-- [ ] NoteEditor - should 태그 칩 없이 편집 폼을 유지한다 when 선택된 노트의 tags가 빈 배열이다
-- [ ] NoteList - should 태그 텍스트를 목록 항목에 표시하지 않는다 when 노트가 tags 배열을 가진다
+- [x] NoteEditor - should 태그 칩 없이 편집 폼을 유지한다 when 선택된 노트의 tags가 빈 배열이다
+- [x] NoteList - should 태그 텍스트를 목록 항목에 표시하지 않는다 when 노트가 tags 배열을 가진다
 
 ### 예외
 
-- [ ] fetchNotes - should tags를 빈 배열로 정규화한다 when API 응답 노트에 tags 필드가 없다
-- [ ] fetchNotes - should tags를 빈 배열로 정규화한다 when API 응답 노트의 tags가 배열이 아니다
-- [ ] NoteEditor - should 화면 오류 없이 제목, 본문, 저장 버튼을 표시한다 when 선택된 기존 노트에 tags 필드가 없다
+- [x] fetchNotes - should tags를 빈 배열로 정규화한다 when API 응답 노트에 tags 필드가 없다
+- [x] fetchNotes - should tags를 빈 배열로 정규화한다 when API 응답 노트의 tags가 배열이 아니다
+- [x] NoteEditor - should 화면 오류 없이 제목, 본문, 저장 버튼을 표시한다 when 선택된 기존 노트에 tags 필드가 없다
 
 ### 회귀
 
-- [ ] NoteEditor - should 기존 제목과 본문 동기화를 유지한다 when 태그가 있는 노트를 선택한다
-- [ ] NoteEditor - should 태그가 없는 노트를 위한 큰 empty state를 표시하지 않는다 when 선택된 노트의 tags가 비어 있다
+- [x] NoteEditor - should 기존 제목과 본문 동기화를 유지한다 when 태그가 있는 노트를 선택한다
+- [x] NoteEditor - should 태그가 없는 노트를 위한 큰 empty state를 표시하지 않는다 when 선택된 노트의 tags가 비어 있다
 
 ## AC 커버리지
 

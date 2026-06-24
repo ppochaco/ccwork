@@ -127,14 +127,15 @@ Notes App의 스타일 작업은 Figma에서 정의한 디자인 시스템을 �
 
 ## Radius Tokens
 
-| Token        | Value  | 용도                       |
-| ------------ | ------ | -------------------------- |
-| `--radius-0` | `0`    | divider, reset             |
-| `--radius-3` | `6px`  | tag chip, compact control  |
-| `--radius-4` | `8px`  | popover, input, small card |
-| `--radius-6` | `12px` | button, standard control   |
-| `--radius-7` | `16px` | note card                  |
-| `--radius-8` | `24px` | editor panel               |
+| Token           | Value    | 용도                       |
+| --------------- | -------- | -------------------------- |
+| `--radius-0`    | `0`      | divider, reset             |
+| `--radius-3`    | `6px`    | compact control            |
+| `--radius-4`    | `8px`    | popover, input, small card |
+| `--radius-6`    | `12px`   | button, standard control   |
+| `--radius-7`    | `16px`   | note card                  |
+| `--radius-8`    | `24px`   | editor panel               |
+| `--radius-full` | `9999px` | pill, tag chip             |
 
 ## Stroke Tokens
 
