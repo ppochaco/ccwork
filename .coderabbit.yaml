@@ -1,0 +1,36 @@
+language: 'ko-KR'
+
+reviews:
+  profile: 'chill'
+
+  auto_review:
+    enabled: true
+    base_branches:
+      - 'main'
+      - 'feature/.*'
+      - 'hotfix/.*'
+    drafts: false
+    auto_incremental_review: true
+
+  path_filters:
+    - '!dist/**'
+    - '!build/**'
+    - '!coverage/**'
+    - '!node_modules/**'
+    - '!**/*.lock'
+
+  pre_merge_checks:
+    description:
+      mode: 'warning'
+    issue_assessment:
+      mode: 'warning'
+
+  tools:
+    gitleaks:
+      enabled: true
+    trufflehog:
+      enabled: true
+    actionlint:
+      enabled: true
+    zizmor:
+      enabled: true
