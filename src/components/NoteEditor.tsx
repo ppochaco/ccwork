@@ -7,6 +7,27 @@ interface NoteEditorProps {
   onDone: () => void;
 }
 
+interface NoteTagsProps {
+  tags: string[];
+}
+
+function NoteTags({ tags }: NoteTagsProps) {
+  if (tags.length === 0) return null;
+
+  return (
+    <div className="flex flex-wrap gap-2 mb-4">
+      {tags.map((tag) => (
+        <span
+          key={tag}
+          className="inline-flex items-center rounded-full border border-border bg-muted px-2 py-1 text-xs font-semibold text-foreground/70"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorProps) {
   const { notes, createNote, updateNote } = useNotes();
   const [title, setTitle] = useState('');
@@ -76,18 +97,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
         className="w-full text-xl font-bold text-foreground bg-transparent border-none outline-none placeholder:text-muted-foreground/50 mb-4"
       />
 
-      {tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="inline-flex items-center rounded-full border border-border bg-muted px-2 py-1 text-xs font-semibold text-foreground/70"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      <NoteTags tags={tags} />
 
       {/* 구분선 */}
       <div className="h-px bg-border mb-4" />
