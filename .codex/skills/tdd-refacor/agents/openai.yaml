@@ -1,0 +1,4 @@
+interface:
+  display_name: 'TDD Refactor'
+  short_description: 'Refactor issue production code while preserving passing tests.'
+  default_prompt: 'Use $tdd-refacor to refactor production code changed for one issue while keeping tests green.'
