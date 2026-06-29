@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Skill Review'
+  short_description: 'Review type errors and security risks before commit.'
+  default_prompt: 'Use $skill-review to review one issue for type errors and security risks before commit.'
