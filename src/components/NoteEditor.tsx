@@ -7,6 +7,27 @@ interface NoteEditorProps {
   onDone: () => void;
 }
 
+interface NoteTagsProps {
+  tags: string[];
+}
+
+function NoteTags({ tags }: NoteTagsProps) {
+  if (tags.length === 0) return null;
+
+  return (
+    <div className="flex flex-wrap gap-2 mb-4">
+      {tags.map((tag) => (
+        <span
+          key={tag}
+          className="inline-flex items-center rounded-full border border-border bg-muted px-2 py-1 text-xs font-semibold text-foreground/70"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorProps) {
   const { notes, createNote, updateNote } = useNotes();
   const [title, setTitle] = useState('');
@@ -14,6 +35,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
   const [saving, setSaving] = useState(false);
 
   const selectedNote = notes.find((n) => n.id === selectedNoteId);
+  const tags = selectedNote?.tags ?? [];
 
   // 선택된 노트가 바뀔 때 폼 동기화
   useEffect(() => {
@@ -53,9 +75,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
       <div className="flex items-center justify-center h-full">
         <div className="text-center space-y-3">
           <p className="text-5xl">📝</p>
-          <p className="text-muted-foreground text-sm">
-            노트를 선택하거나 새 노트를 만드세요
-          </p>
+          <p className="text-muted-foreground text-sm">노트를 선택하거나 새 노트를 만드세요</p>
         </div>
       </div>
     );
@@ -76,6 +96,8 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
         placeholder="제목"
         className="w-full text-xl font-bold text-foreground bg-transparent border-none outline-none placeholder:text-muted-foreground/50 mb-4"
       />
+
+      <NoteTags tags={tags} />
 
       {/* 구분선 */}
       <div className="h-px bg-border mb-4" />

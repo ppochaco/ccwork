@@ -208,6 +208,8 @@ gh project item-add <PROJECT_NUMBER> --owner <OWNER> --url <ISSUE_URL>
 
 If project board owner or project number is missing, ask for only the missing information. Place created issues in the Todo column when the project workflow supports it.
 
+After creating GitHub issues, update `docs/features/{name}/issues.md` with the created GitHub issue numbers. Each local issue entry must clearly show the matching GitHub issue number so future branch names, TDD commands, and implementation work use the GitHub issue number rather than the local issue order. Preserve the existing issue content and add the number near the issue heading or metadata area.
+
 ## Completion Checklist
 
 Before finishing, verify:
@@ -219,3 +221,4 @@ Before finishing, verify:
 - `issues.md` contains only vertical slices.
 - Every issue has Given-When-Then Acceptance Criteria.
 - GitHub issues were created only after user confirmation.
+- Created GitHub issue numbers were written back to `issues.md`.

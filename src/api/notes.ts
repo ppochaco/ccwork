@@ -2,10 +2,22 @@ import { Note } from '../types/note';
 
 const API_URL = 'http://localhost:3001';
 
+type NoteResponse = Omit<Note, 'tags'> & {
+  tags?: unknown;
+};
+
+function normalizeNoteResponse(note: NoteResponse): Note {
+  return {
+    ...note,
+    tags: Array.isArray(note.tags) ? note.tags : [],
+  };
+}
+
 export async function fetchNotes(): Promise<Note[]> {
   const res = await fetch(`${API_URL}/notes`);
   if (!res.ok) throw new Error('Failed to fetch notes');
-  return res.json();
+  const notes = (await res.json()) as NoteResponse[];
+  return notes.map(normalizeNoteResponse);
 }
 
 export async function createNote(

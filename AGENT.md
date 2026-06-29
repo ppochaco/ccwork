@@ -58,6 +58,11 @@
 - 이벤트 prop: `onX`.
 - 내부 핸들러: `handleX`.
 
+## 브랜치 규칙
+
+- 브랜치 번호는 반드시 GitHub 이슈 번호를 사용한다.
+- 브랜치 컨벤션은 `feature/<GitHub issue number>-<기능>-<설명>` 형식을 따른다.
+
 ## 커밋 규칙
 
 - Conventional Commits 형식을 사용하되 제목과 본문은 한국어로 작성한다. 예: `feat: 노트 편집기 추가`

@@ -52,7 +52,7 @@ divider
 | background | `--color-primary-10` 또는 `--color-surface-muted` |
 | text       | `--color-text-secondary`                          |
 | border     | `--color-border-default`                          |
-| radius     | `--radius-3`                                      |
+| radius     | `--radius-full`                                   |
 | padding    | 좌우 `--space-2`, 상하 `--space-1`                |
 | font       | `--font-size-caption`, `--font-weight-semibold`   |
 | gap        | `--space-1`                                       |
